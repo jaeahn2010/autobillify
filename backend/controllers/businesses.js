@@ -3,9 +3,29 @@
 // modules
 const express = require('express')
 const router = express.Router()
+const jwt = require('jwt-simple')
 
 // db connection, models
 const db = require('../models')
+
+// jwt config
+const config = require('../../jwt.config.js')
+
+// middleware for authorization
+const authMiddleware = (req, res, next) => {
+    const token = req.headers.authorization
+    if (token) {
+        try {
+            const decodedToken = jwt.decode(token, config.jwtSecret)
+            req.user = decodedToken
+            next()
+        } catch (err) {
+            res.status(401).json({ message: 'Invalid token' })
+        }
+    } else {
+        res.status(401).json({ message: 'Missing or invalid Authorization header' })
+    }
+}
 
 // routes
 // get business by id

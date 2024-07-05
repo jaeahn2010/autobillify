@@ -7,6 +7,7 @@ const clientSchema = new mongoose.Schema(
         clientName: { type: String, required: true },
         type: { type: String, required: true },
         notes: { type: String },
+        serviceProviderId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'ServiceProvider'},
     },
 )
 

@@ -1,10 +1,14 @@
 // require mongoose pkg
 const mongoose = require('mongoose');
 
-// user schema
+// service provider schema
 const serviceProviderSchema = new mongoose.Schema(
     {
-        userName: { type: String, required: true },
+        businessId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Business'},
+        email: { type: String, required: true, unique: true },
+        password: { type: String, required: true, minlength: 8},
+        firstName: { type: String, required: true },
+        lastName: { type: String, required: true },
         type: { type: String, required: true },
         notes: { type: String },
     },

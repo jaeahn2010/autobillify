@@ -4,9 +4,9 @@ const mongoose = require('mongoose');
 // invoice schema
 const invoiceSchema = new mongoose.Schema(
     {
-        businessId: { type: mongoose.Schema.Types.ObjectId, required: true},
-        serviceProviderId: { type: mongoose.Schema.Types.ObjectId, required: true},
-        clientId: { type: mongoose.Schema.Types.ObjectId, required: true},
+        businessId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Business'},
+        serviceProviderId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'ServiceProvider'},
+        clientId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Client'},
         invoiceNumber: { type: Number, required: true }, // grab latest invoice number from service provider & auto-update
         billedDate: { type: String, required: true },
         services: [{ //itemization
@@ -23,8 +23,9 @@ const invoiceSchema = new mongoose.Schema(
         lateFeePolicy: {
             feeType: { type: String, required: true }, //flat fee, percentage, etc.
             amount: { type: Number, required: true },
-        }
+        },
     },
+    { timestamps: true }
 )
 
 // export to `models/index.js`

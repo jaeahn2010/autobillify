@@ -12,22 +12,28 @@ const db = require('../models')
 const config = require('../../jwt.config.js')
 
 // middleware for authorization
-const authMiddleware = (req, res, next) => {
-    const token = req.headers.authorization
-    if (token) {
-        try {
-            const decodedToken = jwt.decode(token, config.jwtSecret)
-            req.user = decodedToken
-            next()
-        } catch (err) {
-            res.status(401).json({ message: 'Invalid token' })
-        }
-    } else {
-        res.status(401).json({ message: 'Missing or invalid Authorization header' })
-    }
-}
+// const authMiddleware = (req, res, next) => {
+//     const token = req.headers.authorization
+//     if (token) {
+//         try {
+//             const decodedToken = jwt.decode(token, config.jwtSecret)
+//             req.user = decodedToken
+//             next()
+//         } catch (err) {
+//             res.status(401).json({ message: 'Invalid token' })
+//         }
+//     } else {
+//         res.status(401).json({ message: 'Missing or invalid Authorization header' })
+//     }
+// }
 
 // routes
+// get all businesses
+router.get('/all', function (req, res) {
+    db.Business.find()
+        .then(businesses => res.json(businesses))
+})
+
 // get business by id
 router.get('/:businessId', function (req, res) {
     db.Business.find({ businessId: req.params.businessId })

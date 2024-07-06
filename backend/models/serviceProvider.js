@@ -1,5 +1,5 @@
 // require mongoose pkg
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 // service provider schema
 const serviceProviderSchema = new mongoose.Schema(
@@ -9,8 +9,6 @@ const serviceProviderSchema = new mongoose.Schema(
         password: { type: String, required: true, minlength: 8},
         firstName: { type: String, required: true },
         lastName: { type: String, required: true },
-        type: { type: String, required: true },
-        notes: { type: String },
     },
 )
 

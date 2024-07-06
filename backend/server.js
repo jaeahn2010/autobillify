@@ -1,6 +1,6 @@
 // modules
 require('dotenv').config()
-const express = require('express');
+const express = require('express')
 const cors = require('cors')
 const path = require('path')
 
@@ -14,7 +14,7 @@ const invoicesCtrl = require('./controllers/invoices')
 const serviceProvidersCtrl = require('./controllers/serviceProviders')
 
 // express app
-const app = express();
+const app = express()
 
 // middleware 
 

@@ -1,6 +1,11 @@
 import axios from 'axios'
 
 //businesses CRUD
+export async function getAllBusinesses() {
+    const { data } = await axios.get(`/api/businesses/all`)
+    return data
+}
+
 export async function getBusinessById(businessId) {
     const { data } = await axios.get(`/api/businesses/${businessId}`)
     return data
@@ -27,16 +32,18 @@ export async function getClientById(clientId) {
 }
 
 export async function postClient(client) {
-    const { data } = await axios.post('/api/clients', client)
+    const authHeader = { headers: { 'Authorization': localStorage.getItem('userToken') } }
+    const { data } = await axios.post('/api/clients', client, authHeader)
     return data
 }
 export async function updateClient(client, clientId) {
-    const { data } = await axios.put(`/api/clients/${clientId}`, client)
+    const authHeader = { headers: { 'Authorization': localStorage.getItem('userToken') } }
+    const { data } = await axios.put(`/api/clients/${clientId}`, client, authHeader)
     return data
 }
-
 export async function deleteClient(clientId) {
-    const { data } = await axios.delete(`/api/clients/${clientId}`)
+    const authHeader = { headers: { 'Authorization': localStorage.getItem('userToken') } }
+    const { data } = await axios.delete(`/api/clients/${clientId}`, authHeader)
     return data
 }
 
@@ -52,16 +59,19 @@ export async function getInvoiceById(invoiceId) {
 }
 
 export async function postInvoice(invoice) {
-    const { data } = await axios.post('/api/invoices', invoice)
+    const authHeader = { headers: { 'Authorization': localStorage.getItem('userToken') } }
+    const { data } = await axios.post('/api/invoices', invoice, authHeader)
     return data
 }
 export async function updateInvoice(invoice, invoiceId) {
-    const { data } = await axios.put(`/api/invoices/${invoiceId}`, invoice)
+    const authHeader = { headers: { 'Authorization': localStorage.getItem('userToken') } }
+    const { data } = await axios.put(`/api/invoices/${invoiceId}`, invoice, authHeader)
     return data
 }
 
 export async function deleteInvoice(invoiceId) {
-    const { data } = await axios.delete(`/api/invoices/${invoiceId}`)
+    const authHeader = { headers: { 'Authorization': localStorage.getItem('userToken') } }
+    const { data } = await axios.delete(`/api/invoices/${invoiceId}`, authHeader)
     return data
 }
 
@@ -72,15 +82,29 @@ export async function getServiceProviderById(serviceProviderId) {
 }
 
 export async function postServiceProvider(serviceProvider) {
-    const { data } = await axios.post('/api/serviceProviders', serviceProvider)
+    const authHeader = { headers: { 'Authorization': localStorage.getItem('userToken') } }
+    const { data } = await axios.post('/api/serviceProviders', serviceProvider, authHeader)
     return data
 }
 export async function updateServiceProvider(serviceProvider, serviceProviderId) {
-    const { data } = await axios.put(`/api/serviceProviders/${serviceProviderId}`, serviceProvider)
+    const authHeader = { headers: { 'Authorization': localStorage.getItem('userToken') } }
+    const { data } = await axios.put(`/api/serviceProviders/${serviceProviderId}`, serviceProvider, authHeader)
     return data
 }
 
 export async function deleteServiceProvider(serviceProviderId) {
-    const { data } = await axios.delete(`/api/serviceProviders/${serviceProviderId}`)
+    const authHeader = { headers: { 'Authorization': localStorage.getItem('userToken') } }
+    const { data } = await axios.delete(`/api/serviceProviders/${serviceProviderId}`, authHeader)
+    return data
+}
+
+// signup & login
+export async function signUp(serviceProvider) {
+    const { data } = await axios.post('/api/serviceProviders/signup', serviceProvider)
+    return data
+}
+
+export async function logIn(serviceProvider) {
+    const { data } = await axios.post('/api/serviceProviders/login', serviceProvider)
     return data
 }

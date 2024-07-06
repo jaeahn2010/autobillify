@@ -36,7 +36,7 @@ router.get('/all', function (req, res) {
 
 // get business by id
 router.get('/:businessId', function (req, res) {
-    db.Business.find({ businessId: req.params.businessId })
+    db.Business.findById(req.params.businessId)
         .then(business => res.json(business))
 })
 

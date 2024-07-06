@@ -59,41 +59,42 @@ export async function getInvoiceById(invoiceId) {
 }
 
 export async function postInvoice(invoice) {
-    const authHeader = { headers: { 'Authorization': localStorage.getItem('userToken') } }
+    const authHeader = { headers: { 'Authorization': localStorage.getItem('autobillifyUserToken') } }
     const { data } = await axios.post('/api/invoices', invoice, authHeader)
     return data
 }
 export async function updateInvoice(invoice, invoiceId) {
-    const authHeader = { headers: { 'Authorization': localStorage.getItem('userToken') } }
+    const authHeader = { headers: { 'Authorization': localStorage.getItem('autobillifyUserToken') } }
     const { data } = await axios.put(`/api/invoices/${invoiceId}`, invoice, authHeader)
     return data
 }
 
 export async function deleteInvoice(invoiceId) {
-    const authHeader = { headers: { 'Authorization': localStorage.getItem('userToken') } }
+    const authHeader = { headers: { 'Authorization': localStorage.getItem('autobillifyUserToken') } }
     const { data } = await axios.delete(`/api/invoices/${invoiceId}`, authHeader)
     return data
 }
 
 // service providers CRUD
-export async function getServiceProviderById(serviceProviderId) {
-    const { data } = await axios.get(`/api/serviceProviders/${serviceProviderId}`)
+export async function getCurrentServiceProvider() {
+    const authHeader = { headers: { 'Authorization': localStorage.getItem('autobillifyUserToken') } }
+    const { data } = await axios.get(`/api/serviceProviders`, authHeader)
     return data
 }
 
 export async function postServiceProvider(serviceProvider) {
-    const authHeader = { headers: { 'Authorization': localStorage.getItem('userToken') } }
+    const authHeader = { headers: { 'Authorization': localStorage.getItem('autobillifyUserToken') } }
     const { data } = await axios.post('/api/serviceProviders', serviceProvider, authHeader)
     return data
 }
 export async function updateServiceProvider(serviceProvider, serviceProviderId) {
-    const authHeader = { headers: { 'Authorization': localStorage.getItem('userToken') } }
+    const authHeader = { headers: { 'Authorization': localStorage.getItem('autobillifyUserToken') } }
     const { data } = await axios.put(`/api/serviceProviders/${serviceProviderId}`, serviceProvider, authHeader)
     return data
 }
 
 export async function deleteServiceProvider(serviceProviderId) {
-    const authHeader = { headers: { 'Authorization': localStorage.getItem('userToken') } }
+    const authHeader = { headers: { 'Authorization': localStorage.getItem('autobillifyUserToken') } }
     const { data } = await axios.delete(`/api/serviceProviders/${serviceProviderId}`, authHeader)
     return data
 }

@@ -1,23 +1,43 @@
 import './styles.css'
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route, Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { getAllInvoices } from '../../../utils/backend'
 import HomePage from '../HomePage'
 import AuthFormPage from '../AuthFormPage'
+import InvoicesPage from '../InvoicesPage'
 
 export default function App() {
-	const [allInvoices, setAllInvoices] = useState([])
 	const [menu, setMenu] = useState(false)
 	const [loginStatus, setLoginStatus] = useState(false)
+	const navigate = useNavigate()
 
-	// async function getAllData() {
-	// 	const invoices = await getAllInvoices()
-	// 	setAllInvoices(invoices)
-	// }
+	let authLink = !loginStatus ? 
+	<>
+		<Link to='/auth/signup'>
+			<h1 className='my-5'>Sign Up</h1>
+		</Link>
+		<Link to='/auth/login'>
+			<h1 className='my-5'>Log In</h1>
+		</Link>
+	</> :
+	<>
+		<Link to='/invoices'>
+			<h1 className='my-5'>My Invoices</h1>
+		</Link>
+		<button
+			onClick={() => {
+				if (confirm("Are you sure you would like to log out?")) {
+					localStorage.clear()
+					setLoginStatus(false)
+					navigate('/')
+				}
+			}}>
+			Log Out
+		</button>
+	</>
 
-	// useEffect(() => {
-    //     getAllData()
-    // }, [])
+	useEffect(() => {
+        if (localStorage.autobillifyUserToken) setLoginStatus(true)
+    }, [loginStatus])
 
 	return (
 		<main className='relative'>
@@ -31,21 +51,23 @@ export default function App() {
 					<Link to='/'>
 						<h1 className='my-5'>Home</h1>
 					</Link>
-					<Link to='/auth/signup'>
-						<h1 className='my-5'>Sign Up</h1>
-					</Link>
-					<Link to='/auth/login'>
-						<h1 className='my-5'>Log In</h1>
-					</Link>
-					{/* <Link to='/invoices'>
-						<h1 className='my-5'>My Invoices</h1>
-					</Link> */}
+					{authLink}
 				</nav>
 			</section>
 			<section className={`${menu ? 'w-5/6' : 'w-11/12'} absolute right-0`}>
 				<Routes>
-					<Route path='/' element={<HomePage/>}/>
-					<Route path='/auth/:formType' element={<AuthFormPage/>}/>
+					<Route
+						path='/'
+						element={<HomePage/>}
+					/>
+					<Route
+						path='/auth/:formType'
+						element={<AuthFormPage setLoginStatus={setLoginStatus}/>}
+					/>
+					<Route
+						path='/invoices'
+						element={<InvoicesPage/>}
+					/>
 				</Routes>
 			</section>
 		</main>

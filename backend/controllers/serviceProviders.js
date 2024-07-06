@@ -29,9 +29,9 @@ const authMiddleware = (req, res, next) => {
 
 // routes
 // get serviceProvider by id
-router.get('/:serviceProviderId', function (req, res) {
-    db.ServiceProvider.find({ serviceProviderId: req.params.serviceProviderId })
-        .then(serviceProvider => res.json(serviceProvider))
+router.get('/', authMiddleware, async (req, res) => {
+    const serviceProvider = await db.ServiceProvider.findById(req.user.id)
+    serviceProvider._id ? res.json(serviceProvider) : res.status(401).json({ message: 'Invalid user or token'})
 })
 
 // edit serviceProvider
@@ -81,7 +81,9 @@ router.post('/login', async (req, res) => {
         const token = jwt.encode(payload, config.jwtSecret)
         res.json({
             token: token,
-            email: foundUser.email
+            email: foundUser.email,
+            firstName: foundUser.firstName,
+            lastName: foundUser.lastName,
         })
     } else {
         res.status(401)

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { signUp, logIn, getAllBusinesses } from '../../../utils/backend'
 
-export default function AuthFormPage() {
+export default function AuthFormPage({ setLoginStatus }) {
     const { formType } = useParams()
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
@@ -10,7 +10,6 @@ export default function AuthFormPage() {
         password: '',
     })
     const [allBusinesses, setAllBusinesses] = useState([])
-    console.log(formData)
     const handleInputChange = (evt) => {
         setFormData({
             ...formData,
@@ -20,8 +19,12 @@ export default function AuthFormPage() {
 
     async function handleSubmit(evt) {
         evt.preventDefault()
-        const { token } = formType === 'login' ? await logIn(formData) : await signUp(formData)
-        localStorage.setItem('userToken', token)
+        const userData = formType === 'login' ? await logIn(formData) : await signUp(formData)
+        localStorage.setItem('autobillifyUserToken', userData.token)
+        localStorage.setItem('autobillifyUserEmail', userData.email)
+        localStorage.setItem('autobillifyUserFirstName', userData.firstName)
+        localStorage.setItem('autobillifyUserLastName', userData.lastName)
+        setLoginStatus(true)
         navigate('/')
     }
 

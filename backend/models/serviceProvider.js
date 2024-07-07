@@ -10,6 +10,7 @@ const serviceProviderSchema = new mongoose.Schema(
         firstName: { type: String, required: true },
         lastName: { type: String, required: true },
         invoices: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Invoice' }],
+        clients: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Client' }],
     },
 )
 

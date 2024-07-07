@@ -30,8 +30,14 @@ const authMiddleware = (req, res, next) => {
 // routes
 // get client by id
 router.get('/:clientId', function (req, res) {
-    db.Client.find({ clientId: req.params.clientId })
+    db.Client.findById(req.params.clientId)
         .then(client => res.json(client))
+})
+
+// get clients of a service provider
+router.get('/serviceProvider/:serviceProviderId', function (req, res) {
+    db.Client.find({ serviceProviderId: req.params.serviceProviderId })
+        .then(clients => res.json(clients))
 })
 
 // create new client

@@ -13,16 +13,17 @@ const invoiceSchema = new mongoose.Schema(
             serviceDate: { type: String, required: true },
             serviceName: { type: String, required: true },
             hoursWorked: { type: Number },
+            baseCharge: { type: Number, required: true },
             miscellanousFees: { 
                 feeType: { type: String, required: true }, //travel, equipment, convenience, etc.
                 amount: { type: Number, required: true },
             }, 
             totalFee: { type: Number },
         }],
-        gracePeriod: { type: Number }, //days before late fee applies
         lateFeePolicy: {
-            feeType: { type: String, required: true }, //flat fee, percentage, etc.
-            amount: { type: Number, required: true },
+            feeType: { type: String }, //flat fee, percentage, etc.
+            amount: { type: Number },
+            gracePeriod: { type: Number }, //days before late fee applies
         },
     },
     { timestamps: true }

@@ -31,6 +31,11 @@ export async function getClientById(clientId) {
     return data
 }
 
+export async function getClientsOfServiceProvider(serviceProviderId) {
+    const { data } = await axios.get(`/api/clients/serviceProvider/${serviceProviderId}`)
+    return data
+}
+
 export async function postClient(client) {
     const authHeader = { headers: { 'Authorization': localStorage.getItem('userToken') } }
     const { data } = await axios.post('/api/clients', client, authHeader)

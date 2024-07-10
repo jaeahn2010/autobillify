@@ -37,17 +37,17 @@ export async function getClientsOfServiceProvider(serviceProviderId) {
 }
 
 export async function postClient(client) {
-    const authHeader = { headers: { 'Authorization': localStorage.getItem('userToken') } }
+    const authHeader = { headers: { 'Authorization': localStorage.getItem('autobillifyUserToken') } }
     const { data } = await axios.post('/api/clients', client, authHeader)
     return data
 }
 export async function updateClient(client, clientId) {
-    const authHeader = { headers: { 'Authorization': localStorage.getItem('userToken') } }
+    const authHeader = { headers: { 'Authorization': localStorage.getItem('autobillifyUserToken') } }
     const { data } = await axios.put(`/api/clients/${clientId}`, client, authHeader)
     return data
 }
 export async function deleteClient(clientId) {
-    const authHeader = { headers: { 'Authorization': localStorage.getItem('userToken') } }
+    const authHeader = { headers: { 'Authorization': localStorage.getItem('autobillifyUserToken') } }
     const { data } = await axios.delete(`/api/clients/${clientId}`, authHeader)
     return data
 }

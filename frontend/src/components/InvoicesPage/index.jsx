@@ -3,6 +3,7 @@ import { getCurrentServiceProvider, getBusinessById } from '../../../utils/backe
 import InvoiceForm from '../InvoiceForm'
 
 export default function InvoicesPage() {
+    const [currentUser, setCurrentUser] = useState({})
     const [userBusinessName, setUserBusinessName] = useState('')
     const [userInvoices, setUserInvoices] = useState([])
     const [userClientIds, setUserClientIds] = useState([])
@@ -10,12 +11,13 @@ export default function InvoicesPage() {
     const [displayInvoiceForm, setDisplayInvoiceForm] = useState(false)
 
     async function getUserInfo() {
-        const { businessId, firstName, lastName, invoices, clients } = await getCurrentServiceProvider()
-        const { businessName } = await getBusinessById(businessId)
-        setUserFullName(`${lastName}, ${firstName}`)
-        setUserInvoices(invoices)
+        const currentServiceProvider = await getCurrentServiceProvider()
+        const { businessName } = await getBusinessById(currentServiceProvider.businessId)
+        setUserFullName(`${currentServiceProvider.lastName}, ${currentServiceProvider.firstName}`)
+        setUserInvoices(currentServiceProvider.invoices)
         setUserBusinessName(businessName)
-        setUserClientIds(clients)
+        setUserClientIds(currentServiceProvider.clients)
+        setCurrentUser(currentServiceProvider)
     }
     
     useEffect(() => {
@@ -30,6 +32,7 @@ export default function InvoicesPage() {
             <p>Clients: {userClientIds.length}</p>
             <button className='border-stone-800 border-2 rounded-xl p-2 my-5 shadow-xl hover:bg-amber-400 hover:scale-125' onClick={() => setDisplayInvoiceForm(!displayInvoiceForm)}>{displayInvoiceForm ? 'CLOSE FORM' : 'CREATE AN INVOICE'}</button>
             {displayInvoiceForm ? <InvoiceForm
+                currentUser={currentUser}
                 businessName={userBusinessName}
                 serviceProviderName={userFullName}
                 invoiceNumber={userInvoices.length + 1}

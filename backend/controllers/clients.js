@@ -14,6 +14,7 @@ const config = require('../../jwt.config.js')
 // middleware for authorization
 const authMiddleware = (req, res, next) => {
     const token = req.headers.authorization
+    console.log(token)
     if (token) {
         try {
             const decodedToken = jwt.decode(token, config.jwtSecret)

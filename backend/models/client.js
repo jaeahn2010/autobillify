@@ -6,7 +6,7 @@ const clientSchema = new mongoose.Schema(
     {
         clientLastName: { type: String, required: true },
         clientFirstName: { type: String },
-        type: { type: String, required: true },
+        clientType: { type: String, required: true },
         serviceProviderId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'ServiceProvider'},
         tags: [{ type: String }]
     },
